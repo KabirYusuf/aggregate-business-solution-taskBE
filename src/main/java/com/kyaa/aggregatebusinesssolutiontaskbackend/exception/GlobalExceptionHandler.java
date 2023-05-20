@@ -14,7 +14,7 @@ public class GlobalExceptionHandler {
         ApiResponse apiResponse = ApiResponse.builder()
                 .httpStatus(status)
                 .isSuccessful(false)
-                .message(bankAccountNumberException.getMessage())
+                .data(bankAccountNumberException.getMessage())
                 .timeStamp(ZonedDateTime.now())
                 .statusCode(status.value())
                 .build();

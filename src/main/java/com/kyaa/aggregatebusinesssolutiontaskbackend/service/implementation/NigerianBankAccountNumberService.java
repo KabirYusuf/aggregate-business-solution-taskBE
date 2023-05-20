@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import java.math.BigInteger;
 import java.time.ZonedDateTime;
 
 @Service
@@ -22,6 +23,7 @@ public class NigerianBankAccountNumberService implements BankAccountNumberServic
         if (bankAccountNumberRepository.findBankAccountNumberByBankCodeAndSerialNumber(generateAccountNumberRequest.getBankCode(),
                 generateAccountNumberRequest.getSerialNumber()).isPresent()) throw new BankAccountNumberException("serial number "+
                 generateAccountNumberRequest.getSerialNumber() + " already exist in the specified bank");
+        if (!validateBankCode(generateAccountNumberRequest.getBankCode()))throw new BankAccountNumberException("Bank code cant be less than or equal to zero");
         String nuban = generateNuban(generateAccountNumberRequest.getBankCode(),
                 generateAccountNumberRequest.getSerialNumber());
 
@@ -31,12 +33,17 @@ public class NigerianBankAccountNumberService implements BankAccountNumberServic
         return getApiResponse(generateBankAccountResponse);
     }
 
+    private boolean validateBankCode(String bankCode) {
+        int bankCodeIntegerValue = Integer.parseInt(bankCode);
+        return bankCodeIntegerValue > 0;
+    }
+
 
     private ApiResponse getApiResponse(GenerateBankAccountResponse generateBankAccountResponse) {
         return ApiResponse.builder()
                 .statusCode(HttpStatus.CREATED.value())
                 .timeStamp(ZonedDateTime.now())
-                .message(generateBankAccountResponse)
+                .data(generateBankAccountResponse)
                 .isSuccessful(true)
                 .httpStatus(HttpStatus.CREATED)
                 .build();
@@ -61,8 +68,11 @@ public class NigerianBankAccountNumberService implements BankAccountNumberServic
     private String generateNuban(String bankCode, String serialNumber) {
         String concatenateBankCodeAndSerialNumber = bankCode + serialNumber;
         long numericValueOfConcatenateBankCodeAndSerialNumber = Long.parseLong(concatenateBankCodeAndSerialNumber);
+        long startCharacterForBankNumber = numericValueOfConcatenateBankCodeAndSerialNumber - BigInteger.valueOf(1_000_000_000).longValue();
+        String uniqueStartCharacterForBankNumberToString = String.valueOf(startCharacterForBankNumber);
         long checkNumber = numericValueOfConcatenateBankCodeAndSerialNumber % 10;
         String concatenateBankCodeSerialNumberAndCheckNumber = concatenateBankCodeAndSerialNumber + checkNumber;
-        return concatenateBankCodeSerialNumberAndCheckNumber.substring(3);
+        return uniqueStartCharacterForBankNumberToString.substring(0,2) +
+                concatenateBankCodeSerialNumberAndCheckNumber.substring(5);
     }
 }
