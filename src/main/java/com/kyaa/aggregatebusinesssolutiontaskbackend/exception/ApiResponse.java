@@ -11,7 +11,7 @@ import java.time.ZonedDateTime;
 @Getter
 @Builder
 public class ApiResponse {
-    private String message;
+    private Object message;
     private ZonedDateTime timeStamp;
     private int statusCode;
     private HttpStatus httpStatus;
