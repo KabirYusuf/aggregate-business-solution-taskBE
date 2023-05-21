@@ -2,6 +2,8 @@
 
 # The application was developed using java(JDK 20), spring boot, mysql database and maven.
 
+# Mockito framework(BDD) was used to test the functionalities of the app
+
 # Mysql properties configuration i.e url, username and password must be provided in hte application.properties file for the application to run and serve its purpose correctly.
 
 # End-point
