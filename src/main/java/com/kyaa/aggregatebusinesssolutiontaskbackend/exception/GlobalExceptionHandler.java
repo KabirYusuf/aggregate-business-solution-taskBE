@@ -4,7 +4,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import java.time.ZonedDateTime;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
@@ -13,10 +12,8 @@ public class GlobalExceptionHandler {
         HttpStatus status = HttpStatus.BAD_REQUEST;
         ApiResponse apiResponse = ApiResponse.builder()
                 .httpStatus(status)
-                .isSuccessful(false)
-                .data(bankAccountNumberException.getMessage())
-                .timeStamp(ZonedDateTime.now())
                 .statusCode(status.value())
+                .data(bankAccountNumberException.getMessage())
                 .build();
         return new ResponseEntity<>(apiResponse, status);
 

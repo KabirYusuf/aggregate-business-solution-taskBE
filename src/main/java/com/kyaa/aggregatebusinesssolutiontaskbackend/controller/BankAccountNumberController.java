@@ -8,15 +8,13 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@CrossOrigin(origins = "*")
 @RequiredArgsConstructor
 @RequestMapping("api/v1/bank-account-number/")
 public class BankAccountNumberController {
     private final BankAccountNumberService bankAccountNumberService;
 
     @PostMapping("generate-account-number")
-    public ApiResponse generateAccountNumber(@Valid
-                                             @RequestBody
+    public ApiResponse generateAccountNumber(@RequestBody
                                              GenerateAccountNumberRequest generateAccountNumberRequest){
         return bankAccountNumberService.generateAccountNumber(generateAccountNumberRequest);
     }

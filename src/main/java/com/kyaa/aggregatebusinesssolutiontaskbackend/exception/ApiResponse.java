@@ -12,7 +12,7 @@ import java.time.ZonedDateTime;
 @Builder
 public class ApiResponse {
     private Object data;
-    private ZonedDateTime timeStamp;
+    private final ZonedDateTime timeStamp = ZonedDateTime.now();
     private int statusCode;
     private HttpStatus httpStatus;
     private boolean isSuccessful;

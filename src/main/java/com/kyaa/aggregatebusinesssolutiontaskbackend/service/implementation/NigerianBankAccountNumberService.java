@@ -12,7 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.math.BigInteger;
-import java.time.ZonedDateTime;
+
 
 @Service
 @RequiredArgsConstructor
@@ -20,10 +20,7 @@ public class NigerianBankAccountNumberService implements BankAccountNumberServic
     private final BankAccountNumberRepository bankAccountNumberRepository;
     @Override
     public ApiResponse generateAccountNumber(GenerateAccountNumberRequest generateAccountNumberRequest) {
-        if (bankAccountNumberRepository.findBankAccountNumberByBankCodeAndSerialNumber(generateAccountNumberRequest.getBankCode(),
-                generateAccountNumberRequest.getSerialNumber()).isPresent()) throw new BankAccountNumberException("serial number "+
-                generateAccountNumberRequest.getSerialNumber() + " already exist in the specified bank");
-        if (!validateBankCode(generateAccountNumberRequest.getBankCode()))throw new BankAccountNumberException("Bank code cant be less than or equal to zero");
+        nubanGenerationInputValidation(generateAccountNumberRequest);
         String nuban = generateNuban(generateAccountNumberRequest.getBankCode(),
                 generateAccountNumberRequest.getSerialNumber());
 
@@ -33,8 +30,24 @@ public class NigerianBankAccountNumberService implements BankAccountNumberServic
         return getApiResponse(generateBankAccountResponse);
     }
 
+    private void nubanGenerationInputValidation(GenerateAccountNumberRequest generateAccountNumberRequest) {
+        if (bankAccountNumberRepository.findBankAccountNumberByBankCodeAndSerialNumber(generateAccountNumberRequest.getBankCode(),
+                generateAccountNumberRequest.getSerialNumber()).isPresent()) throw new BankAccountNumberException("serial number "+
+                generateAccountNumberRequest.getSerialNumber() + " already exist in bank with " +
+                "bank code: " + generateAccountNumberRequest.getBankCode());
+        if (!validateBankCode(generateAccountNumberRequest.getBankCode()))throw new BankAccountNumberException("Bank code cant be " +
+                "less than or equal to zero");
+        if(!validateSerialNumber(generateAccountNumberRequest.getSerialNumber()))throw new BankAccountNumberException("Serial number" +
+                "must be exactly nine characters");
+    }
+
+    private boolean validateSerialNumber(String serialNumber) {
+        return serialNumber.length() == 9;
+    }
+
     private boolean validateBankCode(String bankCode) {
         int bankCodeIntegerValue = Integer.parseInt(bankCode);
+        if (bankCode.length() != 3 ) throw new BankAccountNumberException("Bank code must be exactly three characters");
         return bankCodeIntegerValue > 0;
     }
 
@@ -42,7 +55,6 @@ public class NigerianBankAccountNumberService implements BankAccountNumberServic
     private ApiResponse getApiResponse(GenerateBankAccountResponse generateBankAccountResponse) {
         return ApiResponse.builder()
                 .statusCode(HttpStatus.CREATED.value())
-                .timeStamp(ZonedDateTime.now())
                 .data(generateBankAccountResponse)
                 .isSuccessful(true)
                 .httpStatus(HttpStatus.CREATED)

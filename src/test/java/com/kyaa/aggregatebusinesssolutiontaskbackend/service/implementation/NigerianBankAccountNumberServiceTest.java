@@ -6,7 +6,6 @@ import com.kyaa.aggregatebusinesssolutiontaskbackend.data.model.BankAccountNumbe
 import com.kyaa.aggregatebusinesssolutiontaskbackend.data.repository.BankAccountNumberRepository;
 import com.kyaa.aggregatebusinesssolutiontaskbackend.exception.ApiResponse;
 import com.kyaa.aggregatebusinesssolutiontaskbackend.exception.BankAccountNumberException;
-import org.assertj.core.api.BDDAssertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -19,7 +18,6 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.BDDMockito.then;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -52,7 +50,7 @@ class NigerianBankAccountNumberServiceTest {
         generateAccountNumberRequest.setBankCode("011");
         ApiResponse apiResponse = nigerianBankAccountNumberService.generateAccountNumber(generateAccountNumberRequest);
         assertNotNull(apiResponse);
-        GenerateBankAccountResponse response = (GenerateBankAccountResponse) apiResponse.getMessage();
+        GenerateBankAccountResponse response = (GenerateBankAccountResponse) apiResponse.getData();
         int generatedNubanLength = response.getGeneratedAccountNumber().length();
         assertEquals(BigInteger.valueOf(10).intValue(), generatedNubanLength);
     }
