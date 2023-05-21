@@ -62,7 +62,7 @@ and saves the object in a database. It accepts bank code, serial number, then re
 * Field:
   * `message`: *Request message*
 
-# Response 2
+# Response 3
 *Unsuccessful request due to sending a request with bank code that is not exactly three characters*
 * Status code : `400 bad request`
 * Body:
@@ -78,7 +78,7 @@ and saves the object in a database. It accepts bank code, serial number, then re
 * Field:
   * `message`: *Request message*
 
-# Response 2
+# Response 4
 *Unsuccessful request due to sending a request with serial number that is not exactly nine characters*
 * Status code : `400 bad request`
 * Body:
