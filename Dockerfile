@@ -7,7 +7,7 @@
 #ENTRYPOINT ["java","-jar","aggregatebusinesssolutiontaskbackend.jar"]
 
 # Use Maven 3.8.4 with JDK 17 as the build environment
-FROM maven:3.8.4-openjdk-20 AS build
+FROM maven:4.0.0-openjdk-20 AS build
 
 # Set the working directory
 WORKDIR /app
