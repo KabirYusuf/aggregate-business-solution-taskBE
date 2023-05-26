@@ -19,7 +19,7 @@ COPY . .
 RUN mvn clean package -DskipTests
 
 # Create the final image with Java 17
-FROM adoptopenjdk:17-jdk-hotspot
+FROM openjdk:17-jdk
 
 # Set the working directory
 WORKDIR /app
