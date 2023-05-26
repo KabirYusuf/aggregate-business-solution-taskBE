@@ -25,7 +25,8 @@ FROM openjdk:17-jdk
 WORKDIR /app
 
 # Copy the built JAR file from the build environment
-COPY --from=build /app/target/aggregatebusinesssolutiontaskbackend.jar /app/aggregatebusinesssolutiontaskbackend.jar
+COPY --from=build /app/target/aggregatebusinesssolutiontaskbackend-0.0.1-SNAPSHOT.jar /app/aggregatebusinesssolutiontaskbackend.jar
+
 
 # Expose the application port
 EXPOSE 8080
