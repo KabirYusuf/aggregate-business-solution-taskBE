@@ -7,7 +7,7 @@
 #ENTRYPOINT ["java","-jar","aggregatebusinesssolutiontaskbackend.jar"]
 
 # Use Maven 3.8.4 with JDK 17 as the build environment
-FROM maven:4.0.0-openjdk-20 AS build
+FROM maven:3.8.4-openjdk-17 AS build
 
 # Set the working directory
 WORKDIR /app
@@ -19,7 +19,7 @@ COPY . .
 RUN mvn clean package -DskipTests
 
 # Create the final image with Java 17
-FROM openjdk:20-jdk
+FROM openjdk:17-jdk
 
 # Set the working directory
 WORKDIR /app
