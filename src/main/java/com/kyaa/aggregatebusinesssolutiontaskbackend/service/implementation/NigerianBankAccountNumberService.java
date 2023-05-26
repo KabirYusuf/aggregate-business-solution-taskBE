@@ -38,7 +38,7 @@ public class NigerianBankAccountNumberService implements BankAccountNumberServic
         if (!validateBankCode(generateAccountNumberRequest.getBankCode()))throw new BankAccountNumberException("Bank code cant be " +
                 "less than or equal to zero");
         if(!validateSerialNumber(generateAccountNumberRequest.getSerialNumber()))throw new BankAccountNumberException("Serial number" +
-                "must be exactly nine characters");
+                " must be exactly nine characters");
     }
 
     private boolean validateSerialNumber(String serialNumber) {
