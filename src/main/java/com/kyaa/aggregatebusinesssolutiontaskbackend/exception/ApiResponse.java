@@ -6,6 +6,7 @@ import lombok.Setter;
 import org.springframework.http.HttpStatus;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.ZonedDateTime;
 
 @Setter
@@ -13,7 +14,7 @@ import java.time.ZonedDateTime;
 @Builder
 public class ApiResponse {
     private Object data;
-    private final LocalDateTime timeStamp = LocalDateTime.now();
+    private final ZonedDateTime timeStamp = ZonedDateTime.now(ZoneId.of("Z"));
     private int statusCode;
     private HttpStatus httpStatus;
     private boolean isSuccessful;
