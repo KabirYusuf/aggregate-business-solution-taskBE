@@ -13,7 +13,7 @@
 and saves the object in a database. It accepts bank code, serial number, then returns a message.*
 
 # Request
-* Url: `https://localhost:8080/api/v1/bank-account-number/generate-account-number`
+* Url: `https://aggregate-business-solution.onrender.com/api/v1/bank-account-number/generate-account-number`
 * Method: POST
 * Header :
     * `Content-Type : application/json`
