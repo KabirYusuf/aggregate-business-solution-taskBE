@@ -5,6 +5,8 @@ import com.kyaa.aggregatebusinesssolutiontaskbackend.exception.ApiResponse;
 import com.kyaa.aggregatebusinesssolutiontaskbackend.service.BankAccountNumberService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -14,8 +16,8 @@ public class BankAccountNumberController {
     private final BankAccountNumberService bankAccountNumberService;
 
     @PostMapping("generate-account-number")
-    public ApiResponse generateAccountNumber(@RequestBody
+    public ResponseEntity<ApiResponse> generateAccountNumber(@RequestBody
                                              GenerateAccountNumberRequest generateAccountNumberRequest){
-        return bankAccountNumberService.generateAccountNumber(generateAccountNumberRequest);
+        return new ResponseEntity<>( bankAccountNumberService.generateAccountNumber(generateAccountNumberRequest), HttpStatus.CREATED);
     }
 }

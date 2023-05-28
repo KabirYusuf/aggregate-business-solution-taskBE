@@ -1,12 +1,4 @@
-#FROM maven:4.0.0-jdk-20 As build
-#COPY . .
-#RUN mvn mvn clean package -DskipTests
-#FROM openjdk:20
-#COPY --from=build /target/aggregatebusinesssolutiontaskbackend.jar aggregatebusinesssolutiontaskbackend.jar
-#EXPOSE 8080
-#ENTRYPOINT ["java","-jar","aggregatebusinesssolutiontaskbackend.jar"]
-
-# Use Maven 3.8.4 with JDK 17 as the build environment
+#FROM maven:4.0.0-jdk-17 As build
 FROM maven:3.8.4-openjdk-17 AS build
 
 # Set the working directory
